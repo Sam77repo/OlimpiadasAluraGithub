@@ -3,12 +3,34 @@ function pesquisar() {
     let section = document.getElementById("resultados-pesquisa")
     console.log(section); // Loga a seção no console para fins de depuração
 
-    // Inicializa uma string vazia para armazenar os resultados da pesquisa
-    let resultados = ""
+    let campoPesquisa = document.getElementById("campo-pesquisa").value
 
-    // Itera sobre cada dado da pesquisa
+    // se campoPesquisa é uma string vazia então não exibir nada
+
+    if(campoPesquisa ==""){ section.innerHTML = "<p>Nada foi encontrado</p>"
+        return
+    }
+
+    campoPesquisa= campoPesquisa.toLowerCase()
+
+    console.log(campoPesquisa);
+
+    // Inicializa uma string vazia para armazenar os resultados da pesquisa
+    let resultados = "";
+    let titulo = "";
+    let descricao = "";
+    let tags ="";
+
+    // Descrever
     for (let dado of dados) {
-        // Concatena HTML para criar um novo item de resultado
+        titulo = dado.titulo.toLowerCase()
+        descricao = dado.descricao.toLowerCase()
+        tags = dado.tags.toLowerCase()
+        //Descrever
+
+        if (titulo.includes(campoPesquisa) || descricao.includes(campoPesquisa) || tags.includes(campoPesquisa)) {
+
+        //cria um novo elemento
         resultados += `
         <div class="item-resultado">
             <h2>
@@ -20,6 +42,13 @@ function pesquisar() {
         `
     }
 
+       
+    }
+    //exibe mensagem no meio da tela caso busca não exista
+    if (!resultados) {
+        resultados = "<p>Nada foi encontrado </p>"
+
+    }
     // Atribui o HTML gerado à seção de resultados
     section.innerHTML = resultados
 }
